@@ -2,18 +2,11 @@ package com.dhoang.spring_ai.controller;
 
 import com.dhoang.spring_ai.dto.ChatRequest;
 import com.dhoang.spring_ai.service.ChatService;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
-//@RequiredArgsConstructor
-//@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ChatController {
     private final ChatService chatService;
 
@@ -24,5 +17,11 @@ public class ChatController {
     @PostMapping("/chat")
     String chat(@RequestBody ChatRequest request){
         return chatService.chat(request);
+    }
+
+    @PostMapping("/chat-with-image")
+    String ChatWithImage(@RequestParam("file") MultipartFile file,
+                         @RequestParam("message") String message){
+        return chatService.chatWithImage(file, message);
     }
 }
